@@ -9,10 +9,14 @@ function check {
     return $status
 }
 
-key=$1
+app=$1
+key=$2
 machine_id=`cat /etc/machine-id`
 metadata=`fleetctl list-machines -l|grep $machine_id|awk '{print $3}'`
 arr=$(echo $metadata | tr "," "\n")
+
+# Get value by app
+check etcdctl get /mast/app/$app/$key 2> /dev/null
 
 # Get value by hostname
 check etcdctl get /mast/hostname/`hostname`/$key 2> /dev/null
