@@ -1,0 +1,26 @@
+#!/bin/bash
+
+function check {
+    "$@"
+    local status=$?
+    if [ $status -eq 0 ]; then
+        exit
+    fi
+    return $status
+}
+
+key=$1
+machine_id=`cat /etc/machine-id`
+metadata=`fleetctl list-machines -l|grep $machine_id|awk '{print $3}'`
+arr=$(echo $metadata | tr "," "\n")
+
+# Get value by hostname
+check etcdctl get /mast/hostname/`hostname`/$key 2> /dev/null
+
+# Get value by metadata sets
+for x in $arr; do
+    check etcdctl get /mast/metadata/$x/$key 2> /dev/null
+done
+
+# Get value by global key
+check etcdctl get /mast/global/$key
