@@ -1,2 +1,2 @@
-# getcdctl
+# rudder
 configuration managent on top of etcd
