@@ -18,7 +18,7 @@ Keys that are looked for value (in priority order - first wins):
 * /mast/hostname/HOSTNAME/KEY
 * /mast/metadata/METAKEY1=METAVALUE1/KEY
 * /mast/metadata/METAKEY2=METAVALUE2/KEY
-* ...
+* /mast/metadata/METAKEYX=METAVALUEX/KEY
 * /mast/global/KEY
 
 # Dependencies
